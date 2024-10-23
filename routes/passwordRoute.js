@@ -3,30 +3,28 @@ const router = express.Router();
 const User = require('../models/User'); 
 const nodemailer = require('nodemailer'); 
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+
 
 router.post('/forgot-password', async (req, res) => {
+  console.log('Forgot password request received'); // Debug log
   const { email } = req.body;
+  console.log(`Email received: ${email}`); // Debug log
 
   try {
-  
     const user = await User.findOne({ email });
     if (!user) {
+      console.log('User not found'); // Debug log
       return res.status(404).json({ message: 'User not found' });
     }
 
- 
-    const token = crypto.randomBytes(32).toString('hex');
-
-
-    user.resetPasswordToken = token; 
-    await user.save();
-
-    res.json({ message: 'Password reset link sent to your email' });
+    // Rest of the code
   } catch (error) {
     console.error('Error in forgot-password route:', error);
     res.status(500).json({ message: 'Internal Server Error' });
   }
 });
+
 
 router.put('/reset-password/:token', async (req, res) => {
     const { token } = req.params;
