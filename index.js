@@ -1,9 +1,8 @@
 const express = require('express');
-const connectDB = require('./config/db'); 
+const connectDB = require('./config/db');
 const passwordRoutes = require('./routes/passwordRoute'); 
-require('dotenv').config(); 
-const cors = require('cors'); 
-
+require('dotenv').config();
+const cors = require('cors');
 
 const app = express();
 
@@ -17,17 +16,18 @@ app.use(express.json());
 app.use(
   cors({
     origin: "http://localhost:3001", 
-    methods: ["POST", "PUT"], 
+    methods: ["POST", "PUT"],
+    credentials: true 
   })
 );
 
 
-app.use('/api', passwordRoutes); 
+app.use('/api', passwordRoutes);
 
 
 app.use((err, req, res, next) => {
   console.error(`Error: ${err.message}`);
-  res.status(500).json({ message: 'Internal Server Error' }); 
+  res.status(500).json({ message: 'Internal Server Error' });
 });
 
 
