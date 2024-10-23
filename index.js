@@ -4,6 +4,7 @@ const passwordRoutes = require('./routes/passwordRoute');
 require('dotenv').config();
 const cors = require('cors');
 
+
 connectDB();
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(
 
 
 app.use('/api', passwordRoutes);
+
 
 
 app.use((err, req, res, next) => {
